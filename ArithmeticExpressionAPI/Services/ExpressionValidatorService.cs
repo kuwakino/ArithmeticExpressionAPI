@@ -14,8 +14,11 @@ namespace ArithmeticExpressionAPI.Service
 
         public bool ValidateAddOnly(string expression)
         {
+            if (string.IsNullOrWhiteSpace(expression))            
+                return false;
+            
             var result = false;
-            var exp = removeSpaces(expression);
+            var exp = removeWhiteSpaces(expression);
 
             var regexInfixAddOnlyExpression = new Regex(infixExpressionAddOnlyRegex);
             result = isRegexMatch(regexInfixAddOnlyExpression, exp);
@@ -25,8 +28,11 @@ namespace ArithmeticExpressionAPI.Service
 
         public bool Validate(string expression)
         {
+            if (string.IsNullOrWhiteSpace(expression))            
+                return false;
+            
             var result = false;
-            string exp = removeSpaces(expression);
+            string exp = removeWhiteSpaces(expression);
 
             var regexInfixExpression = new Regex(infixExpressionRegex);
             result = isRegexMatch(regexInfixExpression, exp);
@@ -34,7 +40,7 @@ namespace ArithmeticExpressionAPI.Service
             return result;
         }
 
-        private static string removeSpaces(string expression)
+        private static string removeWhiteSpaces(string expression)
         {
             return Regex.Replace(expression, @"\s+", "");
         }

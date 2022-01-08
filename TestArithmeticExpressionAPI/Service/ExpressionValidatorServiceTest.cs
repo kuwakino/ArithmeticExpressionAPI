@@ -1,4 +1,5 @@
 ﻿using ArithmeticExpressionAPI.Service;
+using ArithmeticExpressionAPI.Services;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
@@ -16,12 +17,12 @@ namespace TestArithmeticExpressionAPI.Service
             //arrange
             string[] expressions = {
                 "3 + 5 + 6 + 3",
-                "5 - 2 + 4 - 3 + 2",
+                "5 - 2 + 4 - 3 + 2",                
+                "2003",
+                "-1999",
                 "3.1 + 2 - 1",
                 "-2.3 + 5",
                 "2 - 1.5",
-                "2003",
-                "-1999",
             };
             var expressionValidator = new ExpressionValidatorService();
 
@@ -34,5 +35,7 @@ namespace TestArithmeticExpressionAPI.Service
                 Assert.IsTrue(r.isValid,"Failed for: "+ r.expression);
             }
         }
+
+        
     }
 }
