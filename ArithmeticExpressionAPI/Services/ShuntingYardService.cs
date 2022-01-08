@@ -88,6 +88,42 @@ namespace ArithmeticExpressionAPI.Services
             return output.ToString().Trim();
         }
 
-       
+        public static decimal Calculate(string postfixExpression)
+        {
+            decimal result = 0m;
+
+            var tokens = postfixExpression.Split(' ');
+            var operands = new Stack<decimal>();
+            var cInfo = new System.Globalization.CultureInfo("en-US");
+            foreach (var token in tokens)
+            {
+                var value = 0m;
+                switch (token)
+                {                    
+                    case "+":
+                        value = PullValue(operands) + PullValue(operands);
+                        break;
+                    case "-":
+                        value = -PullValue(operands) + PullValue(operands);
+                        break;
+                    default:
+                        value = Convert.ToDecimal(token, cInfo);
+                        break;
+                }
+                operands.Push(Convert.ToDecimal(value, cInfo));
+                
+            }
+            result = operands.Pop();
+
+            return result;
+        }
+
+        private static decimal PullValue(Stack<decimal> operands)
+        {
+            if (operands.Count == 0)
+                return 0;
+            return operands.Pop();
+        }
+
     }
 }
