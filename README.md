@@ -19,7 +19,7 @@ Structured in three layers:
 3. Services - contains services shared among other layers;
 
 ### Design Decisions
-- Using Regex for a fist validation;
+- Using Regex for a first validation;
 - Using [Shunting-yard algorithm by Edsger Dijkstra](https://en.wikipedia.org/wiki/Shunting-yard_algorithm) to validate the expression;
 
 
