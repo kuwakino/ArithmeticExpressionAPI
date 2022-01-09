@@ -11,7 +11,6 @@ namespace ArithmeticExpressionAPI.Service
         public ExpressionValidatorService()
         {            
         }
-
         public bool ValidateAddOnly(string expression)
         {
             if (string.IsNullOrWhiteSpace(expression))            
@@ -19,7 +18,7 @@ namespace ArithmeticExpressionAPI.Service
             
             var result = false; 
             var regexInfixAddOnlyExpression = new Regex(infixExpressionAddOnlyRegex);
-            result = isRegexMatch(regexInfixAddOnlyExpression, expression);
+            result = IsRegexMatch(regexInfixAddOnlyExpression, expression);
 
             return result;
         }
@@ -31,12 +30,12 @@ namespace ArithmeticExpressionAPI.Service
             
             var result = false;
             var regexInfixExpression = new Regex(infixExpressionRegex);
-            result = isRegexMatch(regexInfixExpression, expression);
+            result = IsRegexMatch(regexInfixExpression, expression);
 
             return result;
         }
 
-        private bool isRegexMatch(Regex regex, string exp)
+        private bool IsRegexMatch(Regex regex, string exp)
         {
             return regex.Match(exp).Success;
         }

@@ -5,33 +5,43 @@ namespace ArithmeticExpressionAPI.Services
     public static class ShuntingYardService
     {
         const string numbersChars = "0123456789.";
+        static string operatorsChars = "+-";
 
         public static string ConvertToPostfix(string infixExpression, bool addOnly)
-        {
-            string operatorsChars = "+-";
-            if (addOnly)                 
+        {            
+            if (addOnly)
                 operatorsChars = "+";
 
-            var output = new StringBuilder();
-            var ops = new Stack<char>();
-            var values = new Stack<int>();
-            var number = string.Empty;
+            List<string> enumerableInfixTokens = StringToList(infixExpression);
 
+            return ListToPostfix(enumerableInfixTokens);
+        }
+
+        private static List<string> StringToList(string infixExpression)
+        {
             var enumerableInfixTokens = new List<string>();
-            foreach (char c in infixExpression)
+
+            for (int i = 0; i < infixExpression.Length; i++)
             {
+                char c = infixExpression[i];
+                var token = c.ToString();
                 if (operatorsChars.Contains(c))
                 {
-                    if (number.Length > 0)
-                    {
-                        enumerableInfixTokens.Add(number);
-                        number = string.Empty;
-                    }
-                    enumerableInfixTokens.Add(c.ToString());
+                    enumerableInfixTokens.Add(token);
                 }
                 else if (numbersChars.Contains(c))
                 {
-                    number += c.ToString();
+                    var number = string.Empty;
+                    while (numbersChars.Contains(c))
+                    {
+                        number += c;
+                        i++;
+                        if (i > (infixExpression.Length - 1))
+                            break;
+                        c = infixExpression[i];
+                    }
+                    i--;
+                    enumerableInfixTokens.Add(number);
                 }
                 else
                 {
@@ -39,44 +49,34 @@ namespace ArithmeticExpressionAPI.Services
                 }
             }
 
-            if (number.Length > 0)
-            {
-                enumerableInfixTokens.Add(number);
-                number = string.Empty;
-            }
-
+            return enumerableInfixTokens;
+        }
+        private static string ListToPostfix(List<string> enumerableInfixTokens)
+        {
+            var output = new StringBuilder();
+            var ops = new Stack<char>();
             foreach (string token in enumerableInfixTokens)
             {
                 var isNumber = token.All(c => numbersChars.Contains(c));
-                if (isNumber)
-                {
-                    output.Append(token + ' ');
-                }
+                if (isNumber)                
+                    output.Append(token + ' ');                
                 else if (token.Length == 1)
                 {
                     var c = token[0];
-
-                    if (numbersChars.Contains(c)) // numbers
-                    {
-                        output.Append(c.ToString() + ' ');
-                    }
+                    if (numbersChars.Contains(c)) // numbers                    
+                        output.Append(c.ToString() + ' ');                    
                     else if (operatorsChars.Contains(c)) // operators
                     {
                         if (ops.Count > 0)
-                        {
                             output.Append(ops.Pop().ToString() + ' ');
-                        }
+                        
                         ops.Push(c);
                     }
-                    else
-                    {
-                        throw new Exception(string.Format("Invalid character '{0}'.", c));
-                    }
+                    else                    
+                        throw new Exception(string.Format("Invalid character '{0}'.", c));                    
                 }
-                else
-                {
-                    output.Append(token + ' ');
-                }
+                else                
+                    output.Append(token + ' ');                
             }
 
             while (ops.Count > 0)
