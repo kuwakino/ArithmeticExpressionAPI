@@ -35,9 +35,6 @@ namespace ArithmeticExpressionAPI.Service
             return result;
         }
 
-        private bool IsRegexMatch(Regex regex, string exp)
-        {
-            return regex.Match(exp).Success;
-        }
+        private bool IsRegexMatch(Regex regex, string exp) => regex.Match(exp).Success;
     }
 }

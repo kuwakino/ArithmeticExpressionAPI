@@ -25,10 +25,8 @@ namespace ArithmeticExpressionAPI.Services
             {
                 char c = infixExpression[i];
                 var token = c.ToString();
-                if (operatorsChars.Contains(c))
-                {
-                    enumerableInfixTokens.Add(token);
-                }
+                if (operatorsChars.Contains(c))                
+                    enumerableInfixTokens.Add(token);                
                 else if (numbersChars.Contains(c))
                 {
                     var number = string.Empty;
@@ -43,10 +41,8 @@ namespace ArithmeticExpressionAPI.Services
                     i--;
                     enumerableInfixTokens.Add(number);
                 }
-                else
-                {
-                    throw new Exception(string.Format("Invalid character '{0}'.", c));
-                }
+                else                
+                    throw new Exception(string.Format("Invalid character '{0}'.", c));                
             }
 
             return enumerableInfixTokens;
@@ -118,12 +114,7 @@ namespace ArithmeticExpressionAPI.Services
             return result;
         }
 
-        private static decimal PullValue(Stack<decimal> operands)
-        {
-            if (operands.Count == 0)
-                return 0;
-            return operands.Pop();
-        }
+        private static decimal PullValue(Stack<decimal> operands) => operands.Count == 0 ? 0 : operands.Pop();
 
     }
 }

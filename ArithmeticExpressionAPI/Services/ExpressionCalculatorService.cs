@@ -6,7 +6,7 @@ namespace ArithmeticExpressionAPI.Services
     {
         decimal IExpressionCalculatorService.Calculate(string expression)
         {
-            var postfixExpression = ShuntingYardService.ConvertToPostfix(expression,false);
+            var postfixExpression = ShuntingYardService.ConvertToPostfix(expression, false);
             return ShuntingYardService.Calculate(postfixExpression);
         }
 
