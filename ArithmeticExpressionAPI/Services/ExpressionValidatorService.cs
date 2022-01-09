@@ -17,11 +17,9 @@ namespace ArithmeticExpressionAPI.Service
             if (string.IsNullOrWhiteSpace(expression))            
                 return false;
             
-            var result = false;
-            var exp = removeWhiteSpaces(expression);
-
+            var result = false; 
             var regexInfixAddOnlyExpression = new Regex(infixExpressionAddOnlyRegex);
-            result = isRegexMatch(regexInfixAddOnlyExpression, exp);
+            result = isRegexMatch(regexInfixAddOnlyExpression, expression);
 
             return result;
         }
@@ -32,17 +30,10 @@ namespace ArithmeticExpressionAPI.Service
                 return false;
             
             var result = false;
-            string exp = removeWhiteSpaces(expression);
-
             var regexInfixExpression = new Regex(infixExpressionRegex);
-            result = isRegexMatch(regexInfixExpression, exp);
+            result = isRegexMatch(regexInfixExpression, expression);
 
             return result;
-        }
-
-        private static string removeWhiteSpaces(string expression)
-        {
-            return Regex.Replace(expression, @"\s+", "");
         }
 
         private bool isRegexMatch(Regex regex, string exp)

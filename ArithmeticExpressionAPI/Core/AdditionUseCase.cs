@@ -2,6 +2,7 @@
 
 using ArithmeticExpressionAPI.Core;
 using ArithmeticExpressionAPI.Services;
+using System.Text.RegularExpressions;
 
 namespace ArithmeticExpressionAPI.UseCases
 {
@@ -19,8 +20,9 @@ namespace ArithmeticExpressionAPI.UseCases
         public decimal Execute(string inExpression)
         {
             var result = 0m;
-            var isValidExpression = expressValidatorService.Validate(inExpression);
-            result = CalculateExpression(inExpression, isValidExpression);
+            var expression = RemoveWhiteSpaces(inExpression);
+            var isValidExpression = expressValidatorService.Validate(expression);
+            result = CalculateExpression(expression, isValidExpression);
 
             return result;
         }
@@ -28,10 +30,16 @@ namespace ArithmeticExpressionAPI.UseCases
         public decimal ExecuteAddOnly(string inExpression)
         {
             var result = 0m;
-            var isValidExpression = expressValidatorService.ValidateAddOnly(inExpression);
-            result = CalculateExpression(inExpression, isValidExpression);
+            var expression = RemoveWhiteSpaces(inExpression);
+            var isValidExpression = expressValidatorService.ValidateAddOnly(expression);
+            result = CalculateExpression(expression, isValidExpression);
 
             return result;
+        }
+
+        private static string RemoveWhiteSpaces(string expression)
+        {
+            return Regex.Replace(expression, @"\s+", "");
         }
 
         private decimal CalculateExpression(string inExpression, bool isValidExpression)

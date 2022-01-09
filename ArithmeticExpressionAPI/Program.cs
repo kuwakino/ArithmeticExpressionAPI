@@ -1,11 +1,19 @@
+using Microsoft.Extensions.PlatformAbstractions;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
+
+//Swagger configs
 builder.Services.AddSwaggerGen();
+builder.Services.ConfigureSwaggerGen(options =>
+{
+    var basePath = PlatformServices.Default.Application.ApplicationBasePath;
+    options.IncludeXmlComments(basePath + "\\ArithmeticExpressionAPI.xml");
+});
 
 var app = builder.Build();
 
@@ -15,8 +23,6 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
-app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
