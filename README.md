@@ -20,7 +20,8 @@ Structured in three layers:
 
 ### Design Decisions
 - Using Regex for a first validation;
-- Using [Shunting-yard algorithm by Edsger Dijkstra](https://en.wikipedia.org/wiki/Shunting-yard_algorithm) to validate the expression;
+- Using [Shunting-yard algorithm by Edsger Dijkstra](https://en.wikipedia.org/wiki/Shunting-yard_algorithm) to generate a postfix expression;
+
 
 
 ## Arithmetic Expression API Test Project
